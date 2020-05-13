@@ -14,7 +14,7 @@ const tours = JSON.parse(fs.readFileSync(TOURS_SIMPLE_PATH));
 
 app.use(express.json());
 
-app.get(TOURS_API, (req, res) => {
+const getAllTours = (req, res) => {
   res.status(200).json({
     status: 'success',
     results: tours.length,
@@ -22,9 +22,9 @@ app.get(TOURS_API, (req, res) => {
       tours,
     }
   });
-});
+};
 
-app.get(TOUR_API, (req, res) => {
+const getSingleTour = (req, res) => {
   const tourId = Number(req.params.id);
   const reqTour = tours.find(tour => tour.id === tourId);
 
@@ -41,9 +41,9 @@ app.get(TOUR_API, (req, res) => {
       tour: reqTour,
     }
   });
-});
+};
 
-app.post(TOURS_API, (req, res) => {
+const addTour = (req, res) => {
   const newTourId = tours[tours.length -1 ].id + 1;
   const newTourObject = { id: newTourId, ...req.body }
   tours.push(newTourObject);
@@ -55,9 +55,9 @@ app.post(TOURS_API, (req, res) => {
       }
     });
   });
-});
+};
 
-app.patch(TOUR_API, (req, res) => {
+const editTour = (req, res) => {
   const tourId = Number(req.params.id);
   const reqTour = tours.find(tour => tour.id === tourId);
 
@@ -75,9 +75,9 @@ app.patch(TOUR_API, (req, res) => {
       ...req.body,
     }
   });
-});
+};
 
-app.delete(TOUR_API, (req, res) => {
+const deleteTour = (req, res) => {
   const tourId = Number(req.params.id);
   const reqTour = tours.find(tour => tour.id === tourId);
 
@@ -94,7 +94,16 @@ app.delete(TOUR_API, (req, res) => {
       tours: tours.filter(tour => tour.id !== tourId),
     }
   });
-});
+};
+
+app.route(TOURS_API)
+  .get(getAllTours)
+  .post(addTour);
+
+app.route(TOUR_API)
+  .get(getSingleTour)
+  .patch(editTour)
+  .delete(deleteTour);
 
 app.listen(PORT, () => {
   console.log(`SERVER LISTENING AT ${PORT}`);
