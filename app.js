@@ -75,7 +75,25 @@ app.patch(TOUR_API, (req, res) => {
       ...req.body,
     }
   });
+});
 
+app.delete(TOUR_API, (req, res) => {
+  const tourId = Number(req.params.id);
+  const reqTour = tours.find(tour => tour.id === tourId);
+
+  if (!reqTour) {
+    return res.status(404).json({
+      status: 'fail',
+      message: 'Invalid Id',
+    });
+  }
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      tours: tours.filter(tour => tour.id !== tourId),
+    }
+  });
 });
 
 app.listen(PORT, () => {
