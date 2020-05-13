@@ -1,10 +1,11 @@
 const TOURS_API = '/api/v1/tours';
-const TOUR_API = '/api/v1/tours/:id';
+
+const USERS_API = '/api/v1/users';
 
 const TOURS_SIMPLE_PATH = `${__dirname}/dev-data/data/tours-simple.json`;
 
 module.exports = {
   TOURS_API,
-  TOUR_API,
+  USERS_API,
   TOURS_SIMPLE_PATH,
 }
