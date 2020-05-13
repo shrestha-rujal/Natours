@@ -8,4 +8,4 @@ module.exports = {
   TOURS_API,
   USERS_API,
   TOURS_SIMPLE_PATH,
-}
+};

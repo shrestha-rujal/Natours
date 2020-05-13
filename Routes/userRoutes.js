@@ -1,5 +1,6 @@
 const express = require('express');
-const userController = require('./../Controllers/usercontroller');
+const userController = require('../Controllers/usercontroller');
+
 const router = express.Router();
 
 router.param('id', userController.checkId);
