@@ -37,6 +37,10 @@ const tourSchema = mongoose.Schema({
     type: String,
     trim: true,
   },
+  difficulty: {
+    type: String,
+    required: [true, 'Tour must have a difficulty!'],
+  },
   imageCover: {
     type: String,
     required: [true, 'Tour requires a cover image'],
@@ -47,6 +51,13 @@ const tourSchema = mongoose.Schema({
     default: Date.now(),
   },
   startDates: [Date],
+}, {
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true },
+});
+
+tourSchema.virtual('durationWeeks').get(function getDurationWeeks() {
+  return this.duration / 7;
 });
 
 const Tour = mongoose.model('Tour', tourSchema);
