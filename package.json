@@ -4,9 +4,10 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start:dev": "nodemon server.js",
+    "start": "nodemon server.js",
     "start:prod": "NODE_ENV=production nodemon server.js",
-    "tours:refresh": "node tourDataScript.js --delete --import"
+    "tours:refresh": "node tourDataScript.js --delete --import",
+    "debug": "ndb server.js"
   },
   "repository": {
     "type": "git",
@@ -34,6 +35,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-react": "^7.20.0",
+    "ndb": "^1.1.5",
     "nodemon": "^2.0.3"
   },
   "engines": {
