@@ -1,11 +1,17 @@
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 
+process.on('uncaughtException', (err) => {
+  console.error(err.name, err.message);
+  process.exit(1);
+});
+
 dotenv.config({ path: './config.env' });
 
 const app = require('./app');
 
 const DB_URI = process.env.DATABASE.replace('<PASSWORD>', process.env.DATABASE_PASSWORD);
+const UNHANDLED_REJECTION = 'unhandledRejection';
 const PORT = 3000;
 
 mongoose.connect(DB_URI, {
@@ -14,9 +20,15 @@ mongoose.connect(DB_URI, {
   useFindAndModify: false,
   useUnifiedTopology: true,
 })
-  .then(() => console.log('DATABASE CONNECTION SUCCESSFUL'))
-  .catch((err) => console.error('Database connection failed: ', err));
+  .then(() => console.log('DATABASE CONNECTION SUCCESSFUL'));
 
-app.listen(process.env.PORT || PORT, () => {
+const server = app.listen(process.env.PORT || PORT, () => {
   console.log(`SERVER LISTENING AT ${PORT}`);
+});
+
+process.on(UNHANDLED_REJECTION, (err) => {
+  server.close(() => {
+    console.error(err.name, err.message);
+    process.exit(1);
+  });
 });
