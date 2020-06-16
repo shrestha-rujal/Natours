@@ -21,6 +21,7 @@ const userSchema = mongoose.Schema({
     type: String,
     required: [true, 'Password cannot be empty'],
     minLength: 8,
+    select: false,
   },
   passwordConfirm: {
     type: String,
@@ -42,6 +43,10 @@ userSchema.pre('save', async function encryptPassword(next) {
 
   return next();
 });
+
+userSchema.methods.verifyPassword = async function verifyPassword(candidatePassword, userPassword) {
+  return bcrypt.compare(candidatePassword, userPassword);
+};
 
 const User = mongoose.model('User', userSchema);
 
