@@ -1,5 +1,6 @@
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 
+const { promisify } = require('util');
 const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
 const captureAsyncError = require('../utils/CaptureAsyncError');
@@ -43,4 +44,30 @@ exports.login = captureAsyncError(async (req, res, next) => {
     status: 'success',
     token,
   });
+});
+
+exports.checkLoggedIn = captureAsyncError(async (req, res, next) => {
+  let token;
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+    [, token] = req.headers.authorization.split(' ');
+  }
+  if (!token) {
+    return next(new AppError('Please Login to view tours!', 401));
+  }
+
+  const decodedPayload = await promisify(jwt.verify)(token, process.env.JWT_SECRET_KEY);
+
+  const validUser = await User.findById(decodedPayload.id);
+
+  if (!validUser) {
+    return next(new AppError('The user belonging to this token no longer exists!', 401));
+  }
+
+  if (validUser.hasPasswordChanged(decodedPayload.iat)) {
+    return next(new AppError('Account password has changed, Please login again!', 401));
+  }
+
+  req.user = validUser;
+
+  return next();
 });
