@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
 
+const { ROLES } = require('../const');
+
 const userSchema = mongoose.Schema({
   name: {
     type: String,
@@ -32,6 +34,11 @@ const userSchema = mongoose.Schema({
       },
       message: 'Password confirmation failed!',
     },
+  },
+  role: {
+    type: String,
+    enum: [...Object.values(ROLES)],
+    default: ROLES.USER,
   },
   passwordChangedAt: Date,
 });
