@@ -8,6 +8,8 @@ router.param('id', userController.checkId);
 router.post('/signup', authController.signup);
 router.post('/login', authController.login);
 
+router.post('/forgotPassword', authController.forgotPassword);
+
 router.route('/')
   .get(userController.getAllUsers)
   .post(userController.addUser);
