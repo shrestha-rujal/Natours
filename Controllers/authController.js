@@ -1,5 +1,6 @@
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 
+const crypto = require('crypto');
 const { promisify } = require('util');
 const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
@@ -111,4 +112,30 @@ exports.forgotPassword = captureAsyncError(async (req, res, next) => {
 
     return next('Error sending email, Please try again later!', 500);
   }
+});
+
+exports.resetPassword = captureAsyncError(async (req, res, next) => {
+  const hashedResetToken = crypto.createHash('sha256').update(req.params.token).digest('hex');
+
+  const user = await User.findOne({
+    passwordResetToken: hashedResetToken,
+    passwordResetTokenExpiresAt: { $gt: Date.now() },
+  });
+
+  if (!user) {
+    return next(new AppError('Invalid or Expired Token', 400));
+  }
+
+  user.password = req.body.password;
+  user.passwordConfirm = req.body.passwordConfirm;
+  user.passwordResetToken = undefined;
+  user.passwordResetTokenExpiresAt = undefined;
+  await user.save();
+
+  const token = signToken(user._id);
+
+  return res.status(200).json({
+    status: 'success',
+    token,
+  });
 });
