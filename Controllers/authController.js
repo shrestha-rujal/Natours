@@ -131,7 +131,7 @@ exports.resetPassword = captureAsyncError(async (req, res, next) => {
   return createSendToken(user, 200, res);
 });
 
-exports.updatePassword = captureAsyncError(async (req, res, next) => {
+exports.updateCurrentUserPassword = captureAsyncError(async (req, res, next) => {
   const {
     currentPassword,
     password,
