@@ -36,6 +36,15 @@ exports.updateCurrentUserData = captureAsyncError(async (req, res, next) => {
   });
 });
 
+exports.deleteCurrentUser = captureAsyncError(async (req, res, next) => {
+  await User.findByIdAndUpdate(req.user.id, { active: false });
+
+  return res.status(204).json({
+    status: 'success',
+    data: null,
+  });
+});
+
 exports.getAllUsers = captureAsyncError(async (req, res) => {
   const users = await User.find();
 
