@@ -8,24 +8,25 @@ const captureAsyncError = require('../utils/CaptureAsyncError');
 const AppError = require('../utils/AppError');
 const sendEmail = require('../utils/email');
 
-const signToken = (id) => {
-  return jwt.sign(
-    { id },
-    process.env.JWT_SECRET_KEY,
-    { expiresIn: process.env.JWT_EXPIRES_IN },
-  );
-};
+const signToken = (id) => jwt.sign(
+  { id },
+  process.env.JWT_SECRET_KEY,
+  { expiresIn: process.env.JWT_EXPIRES_IN },
+);
 
-exports.signup = captureAsyncError(async (req, res, next) => {
-  const newUser = await User.create(req.body);
+const createSendToken = (user, statusCode, res) => {
+  const token = signToken(user._id);
 
-  const token = signToken(newUser._id);
-
-  return res.status(201).json({
+  res.status(statusCode).json({
     status: 'success',
     token,
-    user: newUser,
+    data: { user },
   });
+};
+
+exports.signup = captureAsyncError(async (req, res) => {
+  const newUser = await User.create(req.body);
+  createSendToken(newUser, 201, res);
 });
 
 exports.login = captureAsyncError(async (req, res, next) => {
@@ -40,12 +41,7 @@ exports.login = captureAsyncError(async (req, res, next) => {
     return next(new AppError('Incorrect email or password!', 401));
   }
 
-  const token = signToken(user._id);
-
-  return res.status(200).json({
-    status: 'success',
-    token,
-  });
+  return createSendToken(user, 200, res);
 });
 
 exports.checkLoggedIn = captureAsyncError(async (req, res, next) => {
@@ -54,7 +50,7 @@ exports.checkLoggedIn = captureAsyncError(async (req, res, next) => {
     [, token] = req.headers.authorization.split(' ');
   }
   if (!token) {
-    return next(new AppError('Please Login to view tours!', 401));
+    return next(new AppError('Please login to perform this action!', 401));
   }
 
   const decodedPayload = await promisify(jwt.verify)(token, process.env.JWT_SECRET_KEY);
@@ -101,7 +97,7 @@ exports.forgotPassword = captureAsyncError(async (req, res, next) => {
       message,
     });
 
-    res.status(200).json({
+    return res.status(200).json({
       status: 'success',
       message: 'Password reset link sent to email!',
     });
@@ -132,10 +128,23 @@ exports.resetPassword = captureAsyncError(async (req, res, next) => {
   user.passwordResetTokenExpiresAt = undefined;
   await user.save();
 
-  const token = signToken(user._id);
+  return createSendToken(user, 200, res);
+});
 
-  return res.status(200).json({
-    status: 'success',
-    token,
-  });
+exports.updatePassword = captureAsyncError(async (req, res, next) => {
+  const {
+    currentPassword,
+    password,
+    passwordConfirm,
+  } = req.body;
+  const user = await User.findById(req.user.id).select('+password');
+
+  if (!(await user.verifyPassword(currentPassword, user.password))) {
+    return next(new AppError('Incorrect current password!', 401));
+  }
+  user.password = password;
+  user.passwordConfirm = passwordConfirm;
+  await user.save();
+
+  return createSendToken(user, 200, res);
 });
