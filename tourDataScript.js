@@ -2,7 +2,7 @@ const fs = require('fs');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const Tour = require('./models/tourModel');
-const { TOURS_SIMPLE_PATH } = require('./const');
+const { TOURS_PATH } = require('./const');
 
 dotenv.config({ path: './config.env' });
 
@@ -17,7 +17,7 @@ mongoose.connect(URI, {
   .then(() => console.log('DATABASE CONNECTION ESTABLISHED'))
   .catch((err) => console.log('ERROR CONNECTING TO DB: ', err));
 
-const tours = JSON.parse(fs.readFileSync(TOURS_SIMPLE_PATH, 'utf-8'));
+const tours = JSON.parse(fs.readFileSync(TOURS_PATH, 'utf-8'));
 
 const importTours = async () => {
   let createTour;
