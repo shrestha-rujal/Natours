@@ -24,6 +24,9 @@ const tourSchema = mongoose.Schema({
   ratingsAverage: {
     type: Number,
     default: 4.5,
+    min: [1, 'Rating must be above 1'],
+    max: [5, 'Rating must be below 5'],
+    set: (val) => Math.round(val * 10) / 10,
   },
   ratingsQuantity: {
     type: Number,
@@ -55,8 +58,8 @@ const tourSchema = mongoose.Schema({
     type: String,
     required: [true, 'Tour must have a difficulty!'],
     enum: {
-      values: ['easy', 'medium', 'hard'],
-      message: 'Difficulty can be easy, medium or hard',
+      values: ['easy', 'medium', 'difficult'],
+      message: 'Difficulty can be easy, medium or difficult',
     },
   },
   imageCover: {
@@ -73,13 +76,56 @@ const tourSchema = mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  startLocation: {
+    type: {
+      type: String,
+      default: 'Point',
+      enum: ['Point'],
+    },
+    coordinates: [Number], // [longitude, latitude]
+    address: String,
+    description: String,
+  },
+  locations: [
+    {
+      type: {
+        type: String,
+        default: 'Point',
+        enum: ['Point'],
+      },
+      coordinates: [Number],
+      address: String,
+      description: String,
+      day: Number,
+    },
+  ],
+  guides: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'User',
+    },
+  ],
 }, {
   toJSON: { virtuals: true },
   toObject: { virtuals: true },
 });
 
+tourSchema.index({
+  price: 1,
+  ratingsAverage: -1,
+});
+
+tourSchema.index({ slug: 1 });
+tourSchema.index({ startLocation: '2dsphere' });
+
 tourSchema.virtual('durationWeeks').get(function getDurationWeeks() {
   return this.duration / 7;
+});
+
+tourSchema.virtual('reviews', {
+  ref: 'Review',
+  foreignField: 'tour',
+  localField: '_id',
 });
 
 tourSchema.pre('save', function createSlug(next) {
@@ -92,10 +138,18 @@ tourSchema.pre(/^find/, function hideSecretTours(next) {
   next();
 });
 
-tourSchema.pre('aggregate', function hideSecretToursAgg(next) {
-  this.pipeline().unshift({ $match: { secret: { $ne: true } } });
+tourSchema.pre(/^find/, function populateGuides(next) {
+  this.populate({
+    path: 'guides',
+    select: '-__v -passwordChangedAt',
+  });
   next();
 });
+
+// tourSchema.pre('aggregate', function hideSecretToursAgg(next) {
+//   this.pipeline().unshift({ $match: { secret: { $ne: true } } });
+//   next();
+// });
 
 const Tour = mongoose.model('Tour', tourSchema);
 
