@@ -97,7 +97,12 @@ const tourSchema = mongoose.Schema({
       day: Number,
     },
   ],
-  guides: Array,
+  guides: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'User',
+    },
+  ],
 }, {
   toJSON: { virtuals: true },
   toObject: { virtuals: true },
@@ -109,12 +114,6 @@ tourSchema.virtual('durationWeeks').get(function getDurationWeeks() {
 
 tourSchema.pre('save', function createSlug(next) {
   this.slug = slugify(this.name, { lower: true });
-  next();
-});
-
-tourSchema.pre('save', async function fetchGuides(next) {
-  const guidesPromises = this.guides.map(async (guideIds) => User.findById(guideIds));
-  this.guides = await Promise.all(guidesPromises);
   next();
 });
 
