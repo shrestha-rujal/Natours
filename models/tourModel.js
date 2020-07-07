@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
+const User = require('./userModel');
 
 const tourSchema = mongoose.Schema({
   name: {
@@ -56,7 +57,7 @@ const tourSchema = mongoose.Schema({
     required: [true, 'Tour must have a difficulty!'],
     enum: {
       values: ['easy', 'medium', 'difficult'],
-      message: 'Difficulty can be easy, medium or hard',
+      message: 'Difficulty can be easy, medium or difficult',
     },
   },
   imageCover: {
@@ -96,6 +97,7 @@ const tourSchema = mongoose.Schema({
       day: Number,
     },
   ],
+  guides: Array,
 }, {
   toJSON: { virtuals: true },
   toObject: { virtuals: true },
@@ -107,6 +109,12 @@ tourSchema.virtual('durationWeeks').get(function getDurationWeeks() {
 
 tourSchema.pre('save', function createSlug(next) {
   this.slug = slugify(this.name, { lower: true });
+  next();
+});
+
+tourSchema.pre('save', async function fetchGuides(next) {
+  const guidesPromises = this.guides.map(async (guideIds) => User.findById(guideIds));
+  this.guides = await Promise.all(guidesPromises);
   next();
 });
 
