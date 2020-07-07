@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon server.js",
     "start:prod": "NODE_ENV=production nodemon server.js",
-    "tours:refresh": "node tourDataScript.js --delete --import",
+    "refresh-data": "node importScript.js --delete --import",
     "debug": "ndb server.js"
   },
   "repository": {
