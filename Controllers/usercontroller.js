@@ -1,6 +1,7 @@
 const User = require('../models/userModel');
 const AppError = require('../utils/AppError');
 const captureAsyncError = require('../utils/CaptureAsyncError');
+const factory = require('./handlerFactory');
 
 const filterBody = (body, editableFields) => {
   const newBodyObj = {};
@@ -12,6 +13,11 @@ const filterBody = (body, editableFields) => {
 
 exports.checkId = (req, res, next, value) => {
   console.log('check user id: ', value);
+  next();
+};
+
+exports.setCurrentUserId = (req, res, next) => {
+  req.params.id = req.user.id;
   next();
 };
 
@@ -45,16 +51,6 @@ exports.deleteCurrentUser = captureAsyncError(async (req, res, next) => {
   });
 });
 
-exports.getAllUsers = captureAsyncError(async (req, res) => {
-  const users = await User.find();
-
-  res.status(200).json({
-    status: 'success',
-    results: users.length,
-    users,
-  });
-});
-
 exports.addUser = (req, res) => {
   res.status(500).json({
     status: 'error',
@@ -62,23 +58,7 @@ exports.addUser = (req, res) => {
   });
 };
 
-exports.getUser = (req, res) => {
-  res.status(500).json({
-    status: 'error',
-    message: 'Route undefined Yet!',
-  });
-};
-
-exports.editUser = (req, res) => {
-  res.status(500).json({
-    status: 'error',
-    message: 'Route undefined Yet!',
-  });
-};
-
-exports.deleteUser = (req, res) => {
-  res.status(500).json({
-    status: 'error',
-    message: 'Route undefined Yet!',
-  });
-};
+exports.getAllUsers = factory.getAll(User);
+exports.getUser = factory.getOne(User);
+exports.editUser = factory.updateOne(User);
+exports.deleteUser = factory.deleteOne(User);

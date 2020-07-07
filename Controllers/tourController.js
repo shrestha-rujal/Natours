@@ -1,7 +1,8 @@
 const Tour = require('../models/tourModel');
-const QueryFilters = require('../utils/QueryFilters');
+// const QueryFilters = require('../utils/QueryFilters');
 const captureAsyncError = require('../utils/CaptureAsyncError');
 const AppError = require('../utils/AppError');
+const factory = require('./handlerFactory');
 
 exports.aliasTrending = (req, res, next) => {
   req.query.limit = '5';
@@ -77,68 +78,70 @@ exports.tourMonthlyPlan = captureAsyncError(async (req, res) => {
   });
 });
 
-exports.getAllTours = captureAsyncError(async (req, res) => {
-  const filteredQuery = new QueryFilters(Tour.find(), req.query)
-    .filter()
-    .selectFields()
-    .sort()
-    .paginate();
-  const tours = await filteredQuery.query;
-  res.status(200).json({
-    status: 'success',
-    records: tours.length,
-    tours,
-  });
-});
+exports.getToursNearLocation = captureAsyncError(async (req, res, next) => {
+  const { distance, latlng, unit } = req.params;
+  const [latitude, longitude] = latlng.split(',');
 
-exports.getSingleTour = captureAsyncError(async (req, res, next) => {
-  const tour = await Tour.findById(req.params.id);
+  const radius = unit === 'km' ? distance / 6378.1 : distance / 3963.2;
 
-  if (!tour) {
-    return next(new AppError("Couldn't find any tour with given id", 404));
+  if (!latitude || !longitude) {
+    return next(new AppError('Invalid co-ordinates for location center!', 400));
   }
+
+  const tours = await Tour.find({
+    startLocation: { $geoWithin: { $centerSphere: [[longitude, latitude], radius] } },
+  });
 
   return res.status(200).json({
     status: 'success',
-    tour,
-  });
-});
-
-exports.createTour = captureAsyncError(async (req, res) => {
-  const newTour = await Tour.create(req.body);
-  res.status(201).json({
-    status: 'success',
     data: {
-      tour: newTour,
+      records: tours.length,
+      data: tours,
     },
   });
 });
 
-exports.editTour = captureAsyncError(async (req, res, next) => {
-  const editedTour = await Tour.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
-  });
+exports.getTourDistances = captureAsyncError(async (req, res, next) => {
+  const { latlng, unit } = req.params;
+  const [latitude, longitude] = latlng.split(',');
 
-  if (!editedTour) {
-    return next(new AppError('Unable to find a tour with given id', 404));
+  if (!latitude || !longitude) {
+    return next(new AppError('Invalid co-ordinates for location center', 400));
   }
+
+  const distanceMultiplier = unit === 'km' ? 0.001 : 0.000621371;
+
+  const distances = await Tour.aggregate([
+    {
+      $geoNear: {
+        near: {
+          type: 'Point',
+          coordinates: [longitude * 1, latitude * 1],
+        },
+        distanceField: 'distance',
+        distanceMultiplier,
+      },
+    },
+    {
+      $project: {
+        distance: 1,
+        name: 1,
+      },
+    },
+  ]);
 
   return res.status(200).json({
     status: 'success',
-    tour: editedTour,
+    data: {
+      records: distances.length,
+      data: distances,
+    },
   });
+
 });
 
-exports.deleteTour = captureAsyncError(async (req, res, next) => {
-  const tour = await Tour.findByIdAndDelete(req.params.id);
-
-  if (!tour) {
-    return next(new AppError('Unable to find tour with given ID!', 404));
-  }
-
-  return res.status(200).json({
-    status: 'success',
-    data: null,
-  });
-});
+exports.getAllTours = factory.getAll(Tour);
+exports.getSingleTour = factory.getOne(Tour, { path: 'reviews' });
+exports.createTour = factory.createOne(Tour);
+exports.editTour = factory.updateOne(Tour);
+exports.deleteTour = factory.deleteOne(Tour);

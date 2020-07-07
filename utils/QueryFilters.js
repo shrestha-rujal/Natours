@@ -32,7 +32,7 @@ class QueryFilters {
 
   paginate() {
     const page = Number(this.queryObj.page) || 1;
-    const limit = Number(this.queryObj.limit) || 10;
+    const limit = Number(this.queryObj.limit) || 100;
     const skip = (page - 1) * limit;
     this.query = this.query.skip(skip).limit(limit);
 
