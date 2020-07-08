@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
-const User = require('./userModel');
 
 const tourSchema = mongoose.Schema({
   name: {
@@ -119,6 +118,14 @@ tourSchema.pre('save', function createSlug(next) {
 
 tourSchema.pre(/^find/, function hideSecretTours(next) {
   this.find({ secret: { $ne: true } });
+  next();
+});
+
+tourSchema.pre(/^find/, function populateGuides(next) {
+  this.populate({
+    path: 'guides',
+    select: '-__v -passwordChangedAt',
+  });
   next();
 });
 
