@@ -92,7 +92,7 @@ exports.getAllTours = captureAsyncError(async (req, res) => {
 });
 
 exports.getSingleTour = captureAsyncError(async (req, res, next) => {
-  const tour = await Tour.findById(req.params.id);
+  const tour = await Tour.findById(req.params.id).populate('reviews');
 
   if (!tour) {
     return next(new AppError("Couldn't find any tour with given id", 404));
