@@ -1,15 +1,13 @@
 const Review = require('../models/reviewModel');
-const QueryFilters = require('../utils/QueryFilters');
 const captureAsyncError = require('../utils/CaptureAsyncError');
 const AppError = require('../utils/AppError');
 
 exports.getAllReviews = captureAsyncError(async (req, res) => {
-  const filteredQuery = new QueryFilters(Review.find(), req.query)
-    .filter()
-    .selectFields()
-    .sort()
-    .paginate();
-  const reviews = await filteredQuery.query;
+  let filter = {};
+  if (req.params.tourId) filter = { tour: req.params.tourId };
+
+  const reviews = await Review.find(filter);
+
   return res.status(200).json({
     status: 'success',
     records: reviews.length,
@@ -20,6 +18,9 @@ exports.getAllReviews = captureAsyncError(async (req, res) => {
 });
 
 exports.createReview = captureAsyncError(async (req, res) => {
+  if (!req.body.tour) req.body.tour = req.params.tourId;
+  if (!req.body.user) req.body.user = req.user.id;
+
   const newReview = await Review.create(req.body);
   return res.status(201).json({
     status: 'success',
