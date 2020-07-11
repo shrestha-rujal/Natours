@@ -2,6 +2,7 @@ const Tour = require('../models/tourModel');
 const QueryFilters = require('../utils/QueryFilters');
 const captureAsyncError = require('../utils/CaptureAsyncError');
 const AppError = require('../utils/AppError');
+const factory = require('./handlerFactory');
 
 exports.aliasTrending = (req, res, next) => {
   req.query.limit = '5';
@@ -130,15 +131,4 @@ exports.editTour = captureAsyncError(async (req, res, next) => {
   });
 });
 
-exports.deleteTour = captureAsyncError(async (req, res, next) => {
-  const tour = await Tour.findByIdAndDelete(req.params.id);
-
-  if (!tour) {
-    return next(new AppError('Unable to find tour with given ID!', 404));
-  }
-
-  return res.status(200).json({
-    status: 'success',
-    data: null,
-  });
-});
+exports.deleteTour = factory.deleteOne(Tour);

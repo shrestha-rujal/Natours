@@ -1,6 +1,7 @@
 const User = require('../models/userModel');
 const AppError = require('../utils/AppError');
 const captureAsyncError = require('../utils/CaptureAsyncError');
+const factory = require('./handlerFactory');
 
 const filterBody = (body, editableFields) => {
   const newBodyObj = {};
@@ -76,9 +77,4 @@ exports.editUser = (req, res) => {
   });
 };
 
-exports.deleteUser = (req, res) => {
-  res.status(500).json({
-    status: 'error',
-    message: 'Route undefined Yet!',
-  });
-};
+exports.deleteUser = factory.deleteOne(User);

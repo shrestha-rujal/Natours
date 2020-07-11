@@ -13,7 +13,7 @@ router.route('/')
     reviewController.createReview,
   );
 
-router.route('/:reviewId')
+router.route('/:id')
   .get(reviewController.getSingleReview)
   .patch(authController.checkLoggedIn, reviewController.editReview)
   .delete(authController.checkLoggedIn, reviewController.deleteReview);

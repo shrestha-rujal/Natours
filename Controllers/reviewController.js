@@ -1,6 +1,7 @@
 const Review = require('../models/reviewModel');
 const captureAsyncError = require('../utils/CaptureAsyncError');
 const AppError = require('../utils/AppError');
+const factory = require('./handlerFactory');
 
 exports.getAllReviews = captureAsyncError(async (req, res) => {
   let filter = {};
@@ -31,7 +32,7 @@ exports.createReview = captureAsyncError(async (req, res) => {
 });
 
 exports.getSingleReview = captureAsyncError(async (req, res, next) => {
-  const review = await Review.findById(req.params.reviewId);
+  const review = await Review.findById(req.params.id);
 
   if (!review) next(new AppError('Unable to find review related to given id!', 404));
 
@@ -42,7 +43,7 @@ exports.getSingleReview = captureAsyncError(async (req, res, next) => {
 });
 
 exports.editReview = captureAsyncError(async (req, res, next) => {
-  const editedReview = await Review.findByIdAndUpdate(req.params.reviewId, req.body, {
+  const editedReview = await Review.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,
   });
@@ -55,13 +56,4 @@ exports.editReview = captureAsyncError(async (req, res, next) => {
   });
 });
 
-exports.deleteReview = captureAsyncError(async (req, res, next) => {
-  const review = await Review.findByIdAndDelete(req.params.reviewId);
-
-  if (!review) return next(new AppError('Unable to delete review with given id', 404));
-
-  return res.status(200).json({
-    status: 'success',
-    data: null,
-  });
-});
+exports.deleteReview = factory.deleteOne(Review);
