@@ -16,6 +16,11 @@ exports.checkId = (req, res, next, value) => {
   next();
 };
 
+exports.setCurrentUserId = (req, res, next) => {
+  req.params.id = req.user.id;
+  next();
+};
+
 exports.updateCurrentUserData = captureAsyncError(async (req, res, next) => {
   if (req.body.password || req.body.passwordConfirm) {
     return next(new AppError('Cannot update password, please use dedicated password route!', 400));

@@ -20,6 +20,13 @@ router.patch('/updatePassword',
   authController.checkLoggedIn,
   authController.updateCurrentUserPassword);
 
+router.get(
+  '/user-info',
+  authController.checkLoggedIn,
+  userController.setCurrentUserId,
+  userController.getUser,
+);
+
 router.route('/')
   .get(userController.getAllUsers)
   .post(userController.addUser);
