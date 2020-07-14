@@ -1,7 +1,6 @@
 const Tour = require('../models/tourModel');
 const QueryFilters = require('../utils/QueryFilters');
 const captureAsyncError = require('../utils/CaptureAsyncError');
-const AppError = require('../utils/AppError');
 const factory = require('./handlerFactory');
 
 exports.aliasTrending = (req, res, next) => {
@@ -78,57 +77,8 @@ exports.tourMonthlyPlan = captureAsyncError(async (req, res) => {
   });
 });
 
-exports.getAllTours = captureAsyncError(async (req, res) => {
-  const filteredQuery = new QueryFilters(Tour.find(), req.query)
-    .filter()
-    .selectFields()
-    .sort()
-    .paginate();
-  const tours = await filteredQuery.query;
-  res.status(200).json({
-    status: 'success',
-    records: tours.length,
-    tours,
-  });
-});
-
-exports.getSingleTour = captureAsyncError(async (req, res, next) => {
-  const tour = await Tour.findById(req.params.id).populate('reviews');
-
-  if (!tour) {
-    return next(new AppError("Couldn't find any tour with given id", 404));
-  }
-
-  return res.status(200).json({
-    status: 'success',
-    tour,
-  });
-});
-
-exports.createTour = captureAsyncError(async (req, res) => {
-  const newTour = await Tour.create(req.body);
-  res.status(201).json({
-    status: 'success',
-    data: {
-      tour: newTour,
-    },
-  });
-});
-
-exports.editTour = captureAsyncError(async (req, res, next) => {
-  const editedTour = await Tour.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
-  });
-
-  if (!editedTour) {
-    return next(new AppError('Unable to find a tour with given id', 404));
-  }
-
-  return res.status(200).json({
-    status: 'success',
-    tour: editedTour,
-  });
-});
-
+exports.getAllTours = factory.getAll(Tour);
+exports.getSingleTour = factory.getOne(Tour, { path: 'reviews' });
+exports.createTour = factory.createOne(Tour);
+exports.editTour = factory.updateOne(Tour);
 exports.deleteTour = factory.deleteOne(Tour);

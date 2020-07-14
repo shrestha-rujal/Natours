@@ -10,6 +10,7 @@ router.route('/')
   .post(
     authController.checkLoggedIn,
     authController.restrictTo(ROLES.USER),
+    reviewController.setTourUserIds,
     reviewController.createReview,
   );
 
