@@ -11,15 +11,27 @@ router.use('/:tourId/reviews', reviewRouter);
 
 router.route('/trending').get(tourController.aliasTrending, tourController.getAllTours);
 router.route('/stats').get(tourController.tourStats);
-router.route('/monthly-plan/:year').get(tourController.tourMonthlyPlan);
+router.route('/monthly-plan/:year').get(
+  authController.checkLoggedIn,
+  authController.restrictTo(ROLES.ADMIN, ROLES.LEAD_GUIDE, ROLES.GUIDE),
+  tourController.tourMonthlyPlan,
+);
 
 router.route('/')
-  .get(authController.checkLoggedIn, tourController.getAllTours)
-  .post(tourController.createTour);
+  .get(tourController.getAllTours)
+  .post(
+    authController.checkLoggedIn,
+    authController.restrictTo(ROLES.ADMIN, ROLES.LEAD_GUIDE),
+    tourController.createTour,
+  );
 
 router.route('/:id')
   .get(tourController.getSingleTour)
-  .patch(tourController.editTour)
+  .patch(
+    authController.checkLoggedIn,
+    authController.restrictTo(ROLES.ADMIN, ROLES.LEAD_GUIDE),
+    tourController.editTour,
+  )
   .delete(
     authController.checkLoggedIn,
     authController.restrictTo(ROLES.ADMIN, ROLES.LEAD_GUIDE),

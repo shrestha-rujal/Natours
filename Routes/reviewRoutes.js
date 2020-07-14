@@ -5,10 +5,11 @@ const { ROLES } = require('../const');
 
 const router = express.Router({ mergeParams: true });
 
+router.use(authController.checkLoggedIn);
+
 router.route('/')
   .get(reviewController.getAllReviews)
   .post(
-    authController.checkLoggedIn,
     authController.restrictTo(ROLES.USER),
     reviewController.setTourUserIds,
     reviewController.createReview,
@@ -16,7 +17,7 @@ router.route('/')
 
 router.route('/:id')
   .get(reviewController.getSingleReview)
-  .patch(authController.checkLoggedIn, reviewController.editReview)
-  .delete(authController.checkLoggedIn, reviewController.deleteReview);
+  .patch(authController.restrictTo(ROLES.USER, ROLES.ADMIN), reviewController.editReview)
+  .delete(authController.restrictTo(ROLES.USER, ROLES.ADMIN), reviewController.deleteReview);
 
 module.exports = router;
