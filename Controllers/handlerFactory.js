@@ -29,7 +29,6 @@ exports.getOne = (Model, populateOptions) => captureAsyncError(async (req, res, 
 });
 
 exports.getAll = (Model) => captureAsyncError(async (req, res) => {
-
   let filter = {};
   if (req.params.tourId) filter = { tour: req.params.tourId };
 
