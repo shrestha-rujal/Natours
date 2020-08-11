@@ -44,7 +44,7 @@ reviewSchema.pre(/^find/, function populateUserAndTour(next) {
   next();
 });
 
-reviewSchema.statics.calcAverageRatings = async function (tourId) {
+reviewSchema.statics.calcAverageRatings = async function useAggregate(tourId) {
   const stats = await this.aggregate([
     {
       $match: { tour: tourId },
@@ -57,15 +57,22 @@ reviewSchema.statics.calcAverageRatings = async function (tourId) {
       },
     },
   ]);
-  console.log('REVIEW STATS: ', stats);
   await Tour.findByIdAndUpdate(tourId, {
     ratingsQuantity: stats[0].nRating,
     ratingsAverage: stats[0].avgRating,
   });
 };
 
+reviewSchema.pre(/^findOneAnd/, async function queryCurrentReview(next) {
+  this.currentReview = await this.findOne();
+  next();
+});
+
+reviewSchema.post(/^findOneAnd/, async function updateRating() {
+  await this.currentReview.constructor.calcAverageRatings(this.currentReview.tour);
+});
+
 reviewSchema.post('save', function callCalcAvgRatings() {
-  console.log('SAVING REVIEW MODEL');
   this.constructor.calcAverageRatings(this.tour);
 });
 
