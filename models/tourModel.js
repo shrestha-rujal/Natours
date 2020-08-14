@@ -116,6 +116,7 @@ tourSchema.index({
 });
 
 tourSchema.index({ slug: 1 });
+tourSchema.index({ startLocation: '2dsphere' });
 
 tourSchema.virtual('durationWeeks').get(function getDurationWeeks() {
   return this.duration / 7;

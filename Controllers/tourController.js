@@ -1,6 +1,7 @@
 const Tour = require('../models/tourModel');
-const QueryFilters = require('../utils/QueryFilters');
+// const QueryFilters = require('../utils/QueryFilters');
 const captureAsyncError = require('../utils/CaptureAsyncError');
+const AppError = require('../utils/AppError');
 const factory = require('./handlerFactory');
 
 exports.aliasTrending = (req, res, next) => {
@@ -74,6 +75,31 @@ exports.tourMonthlyPlan = captureAsyncError(async (req, res) => {
     status: 'success',
     records: plan.length,
     plan,
+  });
+});
+
+exports.getToursNearLocation = captureAsyncError(async (req, res, next) => {
+  const { distance, latlng, unit } = req.params;
+  const [latitude, longitude] = latlng.split(',');
+
+  const radius = unit === 'km' ? distance / 6378.1 : distance / 3963.2;
+
+  if (!latitude || !longitude) {
+    return next(new AppError('Invalid co-ordinates for location center!', 400));
+  }
+
+  const tours = await Tour.find({
+    startLocation: { $geoWithin: { $centerSphere: [[longitude, latitude], radius] } },
+  });
+
+  console.log('radius in radians: ', radius);
+
+  return res.status(200).json({
+    status: 'success',
+    data: {
+      records: tours.length,
+      data: tours,
+    },
   });
 });
 

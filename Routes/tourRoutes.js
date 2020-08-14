@@ -17,6 +17,9 @@ router.route('/monthly-plan/:year').get(
   tourController.tourMonthlyPlan,
 );
 
+router.route('/tours-near-location/:distance/center/:latlng/unit/:unit')
+  .get(tourController.getToursNearLocation);
+
 router.route('/')
   .get(tourController.getAllTours)
   .post(
