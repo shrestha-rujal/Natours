@@ -92,8 +92,6 @@ exports.getToursNearLocation = captureAsyncError(async (req, res, next) => {
     startLocation: { $geoWithin: { $centerSphere: [[longitude, latitude], radius] } },
   });
 
-  console.log('radius in radians: ', radius);
-
   return res.status(200).json({
     status: 'success',
     data: {
@@ -101,6 +99,45 @@ exports.getToursNearLocation = captureAsyncError(async (req, res, next) => {
       data: tours,
     },
   });
+});
+
+exports.getTourDistances = captureAsyncError(async (req, res, next) => {
+  const { latlng, unit } = req.params;
+  const [latitude, longitude] = latlng.split(',');
+
+  if (!latitude || !longitude) {
+    return next(new AppError('Invalid co-ordinates for location center', 400));
+  }
+
+  const distanceMultiplier = unit === 'km' ? 0.001 : 0.000621371;
+
+  const distances = await Tour.aggregate([
+    {
+      $geoNear: {
+        near: {
+          type: 'Point',
+          coordinates: [longitude * 1, latitude * 1],
+        },
+        distanceField: 'distance',
+        distanceMultiplier,
+      },
+    },
+    {
+      $project: {
+        distance: 1,
+        name: 1,
+      },
+    },
+  ]);
+
+  return res.status(200).json({
+    status: 'success',
+    data: {
+      records: distances.length,
+      data: distances,
+    },
+  });
+
 });
 
 exports.getAllTours = factory.getAll(Tour);
