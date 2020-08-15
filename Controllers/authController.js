@@ -55,10 +55,21 @@ exports.login = captureAsyncError(async (req, res, next) => {
   return createSendToken(user, 200, res);
 });
 
+exports.logout = (req, res) => {
+  res.cookie('jwt', 'loggedout', {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true,
+  });
+
+  res.status(200).json({ status: 'success' });
+};
+
 exports.checkLoggedIn = captureAsyncError(async (req, res, next) => {
   let token;
   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
     [, token] = req.headers.authorization.split(' ');
+  } else if (req.cookies.jwt) {
+    token = req.cookies.jwt;
   }
   if (!token) {
     return next(new AppError('Please login to perform this action!', 401));
@@ -77,9 +88,32 @@ exports.checkLoggedIn = captureAsyncError(async (req, res, next) => {
   }
 
   req.user = validUser;
+  res.locals.user = validUser;
 
   return next();
 });
+
+exports.isUserOnline = async (req, res, next) => {
+  try {
+    if (req.cookies.jwt) {
+      const decodedPayload = await promisify(jwt.verify)(
+        req.cookies.jwt,
+        process.env.JWT_SECRET_KEY,
+      );
+
+      const user = await User.findById(decodedPayload.id);
+
+      if (!user) return next();
+      if (user.hasPasswordChanged(decodedPayload.iat)) return next();
+
+      res.locals.user = user;
+      return next();
+    }
+  } catch (err) {
+    return next();
+  }
+  return next();
+};
 
 exports.restrictTo = (...roles) => (req, res, next) => {
   if (!roles.includes(req.user.role)) {
