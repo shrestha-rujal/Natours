@@ -6,15 +6,15 @@
         "node": true
     },
     "extends": [
-        "airbnb-base",
-        "plugin:node/recommended"
+        "airbnb-base"
     ],
     "globals": {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"
     },
     "parserOptions": {
-        "ecmaVersion": 2018
+        "ecmaVersion": 2018,
+        "sourceType": "module"
     },
     "rules": {
         "no-console": "warn"
