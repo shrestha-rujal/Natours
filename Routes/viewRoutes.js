@@ -4,10 +4,9 @@ const router = express.Router();
 const viewController = require('../Controllers/viewController');
 const authController = require('../Controllers/authController');
 
-router.use(authController.isUserOnline);
-
-router.get('/', viewController.getOverview);
-router.get('/tour/:slug', viewController.getTour);
-router.get('/login', viewController.getLoginForm);
+router.get('/', authController.isUserOnline, viewController.getOverview);
+router.get('/tour/:slug', authController.isUserOnline, viewController.getTour);
+router.get('/login', authController.isUserOnline, viewController.getLoginForm);
+router.get('/account', authController.checkLoggedIn, viewController.getAccount);
 
 module.exports = router;

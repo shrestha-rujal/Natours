@@ -88,6 +88,7 @@ exports.checkLoggedIn = captureAsyncError(async (req, res, next) => {
   }
 
   req.user = validUser;
+  res.locals.user = validUser;
 
   return next();
 });

@@ -4,7 +4,7 @@ import { displayMap } from './mapbox';
 
 // DOM ELEMENTS
 const mapBoxElement = document.getElementById('map');
-const loginFormElement = document.querySelector('.form');
+const loginFormElement = document.querySelector('#login-form');
 const logoutBtn = document.getElementById('logout-btn');
 
 // DELEGATION

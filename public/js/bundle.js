@@ -8782,7 +8782,7 @@ var _mapbox = require("./mapbox");
 
 // DOM ELEMENTS
 var mapBoxElement = document.getElementById('map');
-var loginFormElement = document.querySelector('.form');
+var loginFormElement = document.querySelector('#login-form');
 var logoutBtn = document.getElementById('logout-btn'); // DELEGATION
 
 if (mapBoxElement) {
