@@ -1,13 +1,14 @@
 import '@babel/polyfill';
 import { login, logout } from './login';
 import { displayMap } from './mapbox';
-import { updateCredentials } from './accountSettings';
+import updateAccountCredentials from './accountSettings';
 
 // DOM ELEMENTS
 const mapBoxElement = document.getElementById('map');
 const loginFormElement = document.querySelector('#login-form');
 const logoutBtn = document.getElementById('logout-btn');
 const profileFormElement = document.querySelector('#profile-form');
+const passwordFormElement = document.querySelector('#password-form');
 
 // DELEGATION
 
@@ -33,6 +34,32 @@ if (profileFormElement) {
     const name = document.querySelector('#name').value;
     const email = document.querySelector('#email').value;
 
-    updateCredentials({ name, email });
+    updateAccountCredentials({ data: { name, email } });
+  });
+}
+
+if (passwordFormElement) {
+  passwordFormElement.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const saveBtn = document.querySelector('.btn-save-password');
+    const currentPasswordEl = document.querySelector('#password-current');
+    const passwordEl = document.querySelector('#password');
+    const passwordConfirmEl = document.querySelector('#password-confirm');
+
+    const currentPassword = currentPasswordEl.value;
+    const password = passwordEl.value;
+    const passwordConfirm = passwordConfirmEl.value;
+
+    saveBtn.textContent = 'Updating...';
+
+    await updateAccountCredentials({
+      data: { currentPassword, password, passwordConfirm },
+      isPassword: true,
+    });
+
+    saveBtn.textContent = 'Save password';
+    currentPasswordEl.value = '';
+    passwordEl.value = '';
+    passwordConfirmEl.value = '';
   });
 }
