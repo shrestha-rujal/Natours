@@ -8,6 +8,7 @@ const loginFormElement = document.querySelector('.form');
 const logoutBtn = document.getElementById('logout-btn');
 
 // DELEGATION
+
 if (mapBoxElement) {
   const locations = JSON.parse(mapBoxElement.dataset.locations);
   displayMap(locations);
