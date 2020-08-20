@@ -16,7 +16,8 @@ router.patch('/resetPassword/:token', authController.resetPassword);
 
 router.use(authController.checkLoggedIn);
 
-router.patch('/updateUser',
+router.patch(
+  '/updateUser',
   userController.uploadUserPhoto,
   userController.resizeUploadPhoto,
   userController.updateCurrentUserData,

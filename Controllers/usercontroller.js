@@ -25,19 +25,19 @@ const filterBody = (body, editableFields) => {
 
 exports.uploadUserPhoto = photoUpload.single('photo');
 
-exports.resizeUploadPhoto = (req, res, next) => {
+exports.resizeUploadPhoto = captureAsyncError(async (req, res, next) => {
   if (!req.file) return next();
 
   req.file.filename = `user-${req.user.id}-${Date.now()}.jpeg`;
 
-  sharp(req.file.buffer)
+  await sharp(req.file.buffer)
     .resize(500, 500)
     .toFormat('jpeg')
     .jpeg({ quality: 90 })
     .toFile(`public/img/users/${req.file.filename}`);
 
   return next();
-};
+});
 
 exports.checkId = (req, res, next, value) => {
   console.log('check user id: ', value);
