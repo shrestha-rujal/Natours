@@ -1,7 +1,19 @@
+const multer = require('multer');
+const sharp = require('sharp');
 const User = require('../models/userModel');
 const AppError = require('../utils/AppError');
 const captureAsyncError = require('../utils/CaptureAsyncError');
 const factory = require('./handlerFactory');
+
+const multerFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith('image')) return cb(null, true);
+  return cb(new AppError('Not an image! Please upload image file type!', 400), false);
+};
+
+const photoUpload = multer({
+  storage: multer.memoryStorage(),
+  fileFilter: multerFilter,
+});
 
 const filterBody = (body, editableFields) => {
   const newBodyObj = {};
@@ -10,6 +22,22 @@ const filterBody = (body, editableFields) => {
   });
   return newBodyObj;
 };
+
+exports.uploadUserPhoto = photoUpload.single('photo');
+
+exports.resizeUploadPhoto = captureAsyncError(async (req, res, next) => {
+  if (!req.file) return next();
+
+  req.file.filename = `user-${req.user.id}-${Date.now()}.jpeg`;
+
+  await sharp(req.file.buffer)
+    .resize(500, 500)
+    .toFormat('jpeg')
+    .jpeg({ quality: 90 })
+    .toFile(`public/img/users/${req.file.filename}`);
+
+  return next();
+});
 
 exports.checkId = (req, res, next, value) => {
   console.log('check user id: ', value);
@@ -28,6 +56,7 @@ exports.updateCurrentUserData = captureAsyncError(async (req, res, next) => {
 
   const editableFields = ['name', 'email'];
   const filteredBody = filterBody(req.body, editableFields);
+  if (req.file) filteredBody.photo = req.file.filename;
 
   const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
     new: true,
