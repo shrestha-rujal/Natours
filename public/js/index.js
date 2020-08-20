@@ -31,10 +31,14 @@ if (logoutBtn) logoutBtn.addEventListener('click', logout);
 if (profileFormElement) {
   profileFormElement.addEventListener('submit', (e) => {
     e.preventDefault();
-    const name = document.querySelector('#name').value;
-    const email = document.querySelector('#email').value;
 
-    updateAccountCredentials({ data: { name, email } });
+    const formData = new FormData();
+
+    formData.append('name', document.getElementById('name').value);
+    formData.append('email', document.getElementById('email').value);
+    formData.append('photo', document.getElementById('account-photo').files[0]);
+
+    updateAccountCredentials({ data: formData });
   });
 }
 
