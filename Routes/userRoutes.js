@@ -16,7 +16,12 @@ router.patch('/resetPassword/:token', authController.resetPassword);
 
 router.use(authController.checkLoggedIn);
 
-router.patch('/updateUser', userController.updateCurrentUserData);
+router.patch(
+  '/updateUser',
+  userController.uploadUserPhoto,
+  userController.resizeUploadPhoto,
+  userController.updateCurrentUserData,
+);
 router.delete('/deleteUser', userController.deleteCurrentUser);
 router.patch('/updatePassword', authController.updateCurrentUserPassword);
 
