@@ -1,7 +1,26 @@
+const multer = require('multer');
 const User = require('../models/userModel');
 const AppError = require('../utils/AppError');
 const captureAsyncError = require('../utils/CaptureAsyncError');
 const factory = require('./handlerFactory');
+
+const multerStorage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, 'public/img/users'),
+  filename: (req, file, cb) => {
+    const ext = file.mimetype.split('/')[1];
+    cb(null, `user-${req.user.id}-${Date.now()}.${ext}`);
+  },
+});
+
+const multerFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith('image')) return cb(null, true);
+  return cb(new AppError('Please upload image file type!', 400), false);
+};
+
+const photoUpload = multer({
+  storage: multerStorage,
+  fileFilter: multerFilter,
+});
 
 const filterBody = (body, editableFields) => {
   const newBodyObj = {};
@@ -10,6 +29,8 @@ const filterBody = (body, editableFields) => {
   });
   return newBodyObj;
 };
+
+exports.uploadUserPhoto = photoUpload.single('photo');
 
 exports.checkId = (req, res, next, value) => {
   console.log('check user id: ', value);
