@@ -55,7 +55,6 @@ app.use('/api', limiter);
 
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
-  console.log('COOKIE: ', req.cookies);
   next();
 });
 
