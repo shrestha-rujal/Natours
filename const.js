@@ -1,6 +1,7 @@
 const TOURS_API = '/api/v1/tours';
 const USERS_API = '/api/v1/users';
 const REVIEWS_API = '/api/v1/reviews';
+const BOOKINGS_API = '/api/v1/bookings';
 
 const TOURS_SIMPLE_PATH = `${__dirname}/dev-data/data/tours-simple.json`;
 const TOURS_PATH = `${__dirname}/dev-data/data/tours.json`;
@@ -23,4 +24,5 @@ module.exports = {
   TOURS_PATH,
   REVIEWS_PATH,
   USERS_PATH,
+  BOOKINGS_API,
 };
