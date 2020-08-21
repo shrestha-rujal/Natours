@@ -2,7 +2,7 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const captureAsyncError = require('../utils/CaptureAsyncError');
 const Tour = require('../models/tourModel');
 
-exports.getCheckinSession = captureAsyncError(async (req, res, next) => {
+exports.getCheckoutSession = captureAsyncError(async (req, res, next) => {
   const tour = await Tour.findById(req.params.tourId);
 
   const session = await stripe.checkout.sessions.create({
