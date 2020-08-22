@@ -12,6 +12,7 @@ const app = require('./app');
 
 const DB_URI = process.env.DATABASE.replace('<PASSWORD>', process.env.DATABASE_PASSWORD);
 const UNHANDLED_REJECTION = 'unhandledRejection';
+const SIGTERM = 'SIGTERM';
 const PORT = 3000;
 
 mongoose.connect(DB_URI, {
@@ -31,4 +32,9 @@ process.on(UNHANDLED_REJECTION, (err) => {
     console.error(err.name, err.message);
     process.exit(1);
   });
+});
+
+process.on(SIGTERM, () => {
+  console.log('SIGTERM RECEIVED! shutting down app!');
+  server.close(() => console.log('Process terminated!'));
 });
