@@ -1,110 +1,79 @@
+const path = require('path');
 const express = require('express');
-const fs = require('fs');
-
+const morgan = require('morgan');
+const rateLimit = require('express-rate-limit');
+const helmet = require('helmet');
+const mongoSanitize = require('express-mongo-sanitize');
+const compression = require('compression');
+const xss = require('xss-clean');
+const hpp = require('hpp');
+const cookieParser = require('cookie-parser');
 const {
   TOURS_API,
-  TOUR_API,
-  TOURS_SIMPLE_PATH,
+  USERS_API,
+  REVIEWS_API,
+  BOOKINGS_API,
 } = require('./const');
+const AppError = require('./utils/AppError');
+const errorController = require('./Controllers/errorController');
+const tourRouter = require('./Routes/tourRoutes');
+const userRouter = require('./Routes/userRoutes');
+const reviewRouter = require('./Routes/reviewRoutes');
+const bookingRouter = require('./Routes/bookingRoutes');
+const viewRouter = require('./Routes/viewRoutes');
 
 const app = express();
-const PORT = 3000;
 
-const tours = JSON.parse(fs.readFileSync(TOURS_SIMPLE_PATH));
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
 
-app.use(express.json());
+app.use(helmet());
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.json({ limit: '10kb' }));
+app.use(cookieParser());
+app.use(express.urlencoded({ extended: true, limit: '10kb' }));
+app.use(mongoSanitize());
+app.use(xss());
+app.use(hpp({
+  whitelist: [
+    'duration',
+    'ratingsQuantity',
+    'ratingsAverage',
+    'maxGroupSize',
+    'difficulty',
+    'price',
+  ],
+}));
 
-const getAllTours = (req, res) => {
-  res.status(200).json({
-    status: 'success',
-    results: tours.length,
-    data: {
-      tours,
-    }
-  });
-};
+app.use(compression());
 
-const getSingleTour = (req, res) => {
-  const tourId = Number(req.params.id);
-  const reqTour = tours.find(tour => tour.id === tourId);
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
 
-  if (!reqTour) {
-    return res.status(404).json({
-      status: 'fail',
-      message: 'Unable to find tour with given Id',
-    });
-  }
-
-  res.status(200).json({
-    status: 'success',
-    data: {
-      tour: reqTour,
-    }
-  });
-};
-
-const addTour = (req, res) => {
-  const newTourId = tours[tours.length -1 ].id + 1;
-  const newTourObject = { id: newTourId, ...req.body }
-  tours.push(newTourObject);
-  fs.writeFile(TOURS_SIMPLE_PATH, JSON.stringify(tours), err => {
-    res.status(201).json({
-      status: 'success',
-      data: {
-        tour: newTourObject,
-      }
-    });
-  });
-};
-
-const editTour = (req, res) => {
-  const tourId = Number(req.params.id);
-  const reqTour = tours.find(tour => tour.id === tourId);
-
-  if (!reqTour) {
-    return res.status(404).json({
-      status: 'fail',
-      message: 'Invalid Id',
-    });
-  }
-
-  res.status(200).json({
-    status: 'success',
-    data: {
-      ...reqTour,
-      ...req.body,
-    }
-  });
-};
-
-const deleteTour = (req, res) => {
-  const tourId = Number(req.params.id);
-  const reqTour = tours.find(tour => tour.id === tourId);
-
-  if (!reqTour) {
-    return res.status(404).json({
-      status: 'fail',
-      message: 'Invalid Id',
-    });
-  }
-
-  res.status(200).json({
-    status: 'success',
-    data: {
-      tours: tours.filter(tour => tour.id !== tourId),
-    }
-  });
-};
-
-app.route(TOURS_API)
-  .get(getAllTours)
-  .post(addTour);
-
-app.route(TOUR_API)
-  .get(getSingleTour)
-  .patch(editTour)
-  .delete(deleteTour);
-
-app.listen(PORT, () => {
-  console.log(`SERVER LISTENING AT ${PORT}`);
+const limiter = rateLimit({
+  max: 100,
+  windowMs: 60 * 60 * 1000,
+  message: 'Too many requests from this IP, please try again in an hour!',
 });
+
+app.use('/api', limiter);
+
+app.use((req, res, next) => {
+  req.requestTime = new Date().toISOString();
+  next();
+});
+
+app.use('/', viewRouter);
+app.use(TOURS_API, tourRouter);
+app.use(USERS_API, userRouter);
+app.use(REVIEWS_API, reviewRouter);
+app.use(BOOKINGS_API, bookingRouter);
+
+app.all('*', (req, res, next) => {
+  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+});
+
+app.use(errorController);
+
+module.exports = app;

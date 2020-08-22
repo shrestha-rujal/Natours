@@ -1095,6 +1095,9 @@ body {
   -ms-flex-direction: column;
   flex-direction: column;
 }
+.card:hover {
+  transform: scale(1.05,1.05);
+}
 .card__header {
   position: relative;
 }
@@ -1116,7 +1119,7 @@ body {
     to(#28b487)
   );
   background-image: linear-gradient(to right bottom, #7dd56f, #28b487);
-  opacity: 0.7;
+  opacity: 0.4;
 }
 .card__picture-img {
   -o-object-fit: cover;
