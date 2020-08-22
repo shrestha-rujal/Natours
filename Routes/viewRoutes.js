@@ -11,6 +11,7 @@ router.get(
   authController.isUserOnline,
   viewController.getOverview,
 );
+router.get('/my-tours', authController.checkLoggedIn, viewController.getBookedTours);
 router.get('/tour/:slug', authController.isUserOnline, viewController.getTour);
 router.get('/login', authController.isUserOnline, viewController.getLoginForm);
 router.get('/account', authController.checkLoggedIn, viewController.getAccount);
