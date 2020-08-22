@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
+const compression = require('compression');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
@@ -43,6 +44,9 @@ app.use(hpp({
     'price',
   ],
 }));
+
+app.use(compression());
+
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
