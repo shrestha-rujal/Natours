@@ -14,16 +14,13 @@ const signToken = (id) => jwt.sign(
   { expiresIn: process.env.JWT_EXPIRES_IN },
 );
 
-const createSendToken = (user, statusCode, res) => {
+const createSendToken = (user, statusCode, req, res) => {
   const token = signToken(user._id);
   const cookieOptions = {
     expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 3600 * 1000),
     httpOnly: true,
+    secure: req.secure || req.headers('x-forwarded-proto') === 'https',
   };
-
-  if (process.env.NODE_ENV === 'production') {
-    cookieOptions.secure = true;
-  }
 
   res.cookie('jwt', token, cookieOptions);
   user.password = undefined; //eslint-disable-line
@@ -41,7 +38,7 @@ exports.signup = captureAsyncError(async (req, res) => {
   const url = `${req.protocol}://${req.get('host')}/account`;
   await new Email(newUser, url).sendWelcome();
 
-  createSendToken(newUser, 201, res);
+  createSendToken(newUser, 201, req, res);
 });
 
 exports.login = captureAsyncError(async (req, res, next) => {
@@ -56,7 +53,7 @@ exports.login = captureAsyncError(async (req, res, next) => {
     return next(new AppError('Incorrect email or password!', 401));
   }
 
-  return createSendToken(user, 200, res);
+  return createSendToken(user, 200, req, res);
 });
 
 exports.logout = (req, res) => {
@@ -171,7 +168,7 @@ exports.resetPassword = captureAsyncError(async (req, res, next) => {
   user.passwordResetTokenExpiresAt = undefined;
   await user.save();
 
-  return createSendToken(user, 200, res);
+  return createSendToken(user, 200, req, res);
 });
 
 exports.updateCurrentUserPassword = captureAsyncError(async (req, res, next) => {
@@ -189,5 +186,5 @@ exports.updateCurrentUserPassword = captureAsyncError(async (req, res, next) => 
   user.passwordConfirm = passwordConfirm;
   await user.save();
 
-  return createSendToken(user, 200, res);
+  return createSendToken(user, 200, req, res);
 });
