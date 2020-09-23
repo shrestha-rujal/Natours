@@ -14,6 +14,7 @@ router.get(
 router.get('/my-tours', authController.checkLoggedIn, viewController.getBookedTours);
 router.get('/tour/:slug', authController.isUserOnline, viewController.getTour);
 router.get('/login', authController.isUserOnline, viewController.getLoginForm);
+router.get('/signup', authController.isUserOnline, viewController.getSignupForm);
 router.get('/account', authController.checkLoggedIn, viewController.getAccount);
 
 module.exports = router;
