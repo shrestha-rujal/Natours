@@ -13,6 +13,7 @@ const app = require('./app');
 const UNHANDLED_REJECTION = 'unhandledRejection';
 const PORT = 3000;
 
+console.log('NODE ENVIRONMENT: ', process.env.NODE_ENV);
 if (process.env.NODE_ENV === 'aws') {
   const DB_URI = process.env.AWS_DATABASE.replace('<PASSWORD>', process.env.AWS_PASSWORD);
   const CA = [fs.readFileSync("rds-combined-ca-bundle.pem")];

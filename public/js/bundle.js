@@ -5847,6 +5847,7 @@ for (var collections = getKeys(DOMIterables), i = 0; i < collections.length; i++
 }
 
 },{"./es6.array.iterator":"../../node_modules/core-js/modules/es6.array.iterator.js","./_object-keys":"../../node_modules/core-js/modules/_object-keys.js","./_redefine":"../../node_modules/core-js/modules/_redefine.js","./_global":"../../node_modules/core-js/modules/_global.js","./_hide":"../../node_modules/core-js/modules/_hide.js","./_iterators":"../../node_modules/core-js/modules/_iterators.js","./_wks":"../../node_modules/core-js/modules/_wks.js"}],"../../node_modules/regenerator-runtime/runtime.js":[function(require,module,exports) {
+var define;
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
  *
@@ -5864,6 +5865,24 @@ var runtime = (function (exports) {
   var iteratorSymbol = $Symbol.iterator || "@@iterator";
   var asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator";
   var toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag";
+
+  function define(obj, key, value) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+    return obj[key];
+  }
+  try {
+    // IE 8 has a broken Object.defineProperty that only works on DOM objects.
+    define({}, "");
+  } catch (err) {
+    define = function(obj, key, value) {
+      return obj[key] = value;
+    };
+  }
 
   function wrap(innerFn, outerFn, self, tryLocsList) {
     // If outerFn provided and outerFn.prototype is a Generator, then outerFn.prototype instanceof Generator.
@@ -5935,16 +5954,19 @@ var runtime = (function (exports) {
     Generator.prototype = Object.create(IteratorPrototype);
   GeneratorFunction.prototype = Gp.constructor = GeneratorFunctionPrototype;
   GeneratorFunctionPrototype.constructor = GeneratorFunction;
-  GeneratorFunctionPrototype[toStringTagSymbol] =
-    GeneratorFunction.displayName = "GeneratorFunction";
+  GeneratorFunction.displayName = define(
+    GeneratorFunctionPrototype,
+    toStringTagSymbol,
+    "GeneratorFunction"
+  );
 
   // Helper for defining the .next, .throw, and .return methods of the
   // Iterator interface in terms of a single ._invoke method.
   function defineIteratorMethods(prototype) {
     ["next", "throw", "return"].forEach(function(method) {
-      prototype[method] = function(arg) {
+      define(prototype, method, function(arg) {
         return this._invoke(method, arg);
-      };
+      });
     });
   }
 
@@ -5963,9 +5985,7 @@ var runtime = (function (exports) {
       Object.setPrototypeOf(genFun, GeneratorFunctionPrototype);
     } else {
       genFun.__proto__ = GeneratorFunctionPrototype;
-      if (!(toStringTagSymbol in genFun)) {
-        genFun[toStringTagSymbol] = "GeneratorFunction";
-      }
+      define(genFun, toStringTagSymbol, "GeneratorFunction");
     }
     genFun.prototype = Object.create(Gp);
     return genFun;
@@ -6235,7 +6255,7 @@ var runtime = (function (exports) {
   // unified ._invoke helper method.
   defineIteratorMethods(Gp);
 
-  Gp[toStringTagSymbol] = "Generator";
+  define(Gp, toStringTagSymbol, "Generator");
 
   // A Generator should always return itself as the iterator object when the
   // @@iterator function is called on it. Some browsers' implementations of the
@@ -8454,7 +8474,8 @@ var login = /*#__PURE__*/function () {
           case 0:
             email = _ref.email, password = _ref.password;
             _context.prev = 1;
-            _context.next = 4;
+            console.log('calling login axios');
+            _context.next = 5;
             return (0, _axios.default)({
               method: 'POST',
               url: '/api/v1/users/login',
@@ -8464,8 +8485,9 @@ var login = /*#__PURE__*/function () {
               }
             });
 
-          case 4:
+          case 5:
             res = _context.sent;
+            console.log('AXIOS CALLED!');
 
             if (res.data.status === 'success') {
               (0, _alert.showAlert)('success', 'Logged in successfully!');
@@ -8474,23 +8496,23 @@ var login = /*#__PURE__*/function () {
               }, 1000);
             }
 
-            _context.next = 11;
+            _context.next = 13;
             break;
 
-          case 8:
-            _context.prev = 8;
+          case 10:
+            _context.prev = 10;
             _context.t0 = _context["catch"](1);
             (0, _alert.showAlert)('error', _context.t0.response.data.message);
 
-          case 11:
+          case 13:
             ;
 
-          case 12:
+          case 14:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[1, 8]]);
+    }, _callee, null, [[1, 10]]);
   }));
 
   return function login(_x) {
@@ -9270,7 +9292,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44215" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34067" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

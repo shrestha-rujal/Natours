@@ -9,6 +9,7 @@
     "start:prod": "NODE_ENV=production nodemon server.js",
     "start:aws": "NODE_ENV=aws nodemon server.js",
     "refresh-data": "node importScript.js --delete --import",
+    "refresh-data-aws": "NODE_ENV=aws node importScript.js --delete --import",
     "debug": "ndb server.js",
     "watch": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js",
     "build": "parcel build ./public/js/index.js --out-dir ./public/js --out-file bundle.js"

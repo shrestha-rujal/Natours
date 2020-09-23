@@ -8,16 +8,32 @@ const { TOURS_PATH, REVIEWS_PATH, USERS_PATH } = require('./const');
 
 dotenv.config({ path: './config.env' });
 
-const URI = process.env.DATABASE.replace('<PASSWORD>', process.env.DATABASE_PASSWORD);
-
-mongoose.connect(URI, {
-  useUnifiedTopology: true,
-  useNewUrlParser: true,
-  useCreateIndex: true,
-  useFindAndModify: false,
-})
-  .then(() => console.log('DATABASE CONNECTION ESTABLISHED'))
-  .catch((err) => console.log('ERROR CONNECTING TO DB: ', err));
+if (process.env.NODE_ENV === 'aws') {
+  const DB_URI = process.env.AWS_DATABASE.replace('<PASSWORD>', process.env.AWS_PASSWORD);
+  const CA = [fs.readFileSync("rds-combined-ca-bundle.pem")];
+  
+  mongoose.connect(DB_URI, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+    useUnifiedTopology: true,
+    sslValidate: true,
+    sslCA: CA, 
+  })
+    .then(() => console.log('AWS DB CONNECTION SUCCESSFUL'))
+    .catch((error) => console.log('AWS ERROR: ', error));
+} else {
+  const URI = process.env.DATABASE.replace('<PASSWORD>', process.env.DATABASE_PASSWORD);
+  
+  mongoose.connect(URI, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+  })
+    .then(() => console.log('DATABASE CONNECTION ESTABLISHED'))
+    .catch((err) => console.log('ERROR CONNECTING TO DB: ', err));
+}
 
 const tours = JSON.parse(fs.readFileSync(TOURS_PATH, 'utf-8'));
 const reviews = JSON.parse(fs.readFileSync(REVIEWS_PATH, 'utf-8'));
