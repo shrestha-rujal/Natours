@@ -14,7 +14,7 @@ const tourSchema = mongoose.Schema({
   duration: {
     type: Number,
     required: [true, 'Tour must have a duration!'],
-    min: [3, 'Tour duration too short.'],
+    min: [1, 'Tour duration too short.'],
     max: [31, 'Tour duration too long.'],
   },
   maxGroupSize: {
