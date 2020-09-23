@@ -1,10 +1,10 @@
 [
   {
     "startLocation": {
-      "description": "Kathmandu, Nepal",
+      "description": "Basantapur, Nepal",
       "type": "Point",
-      "coordinates": [-80.185942, 25.774772],
-      "address": "301 Biscayne Blvd, Miami, FL 33132, USA"
+      "coordinates": [85.306658, 27.704168],
+      "address": "Digha Pahleza J P Setu Rd, Kathmandu 44600"
     },
     "ratingsAverage": 4.8,
     "ratingsQuantity": 6,
@@ -15,52 +15,52 @@
       "2021-08-18T09:00:00.000Z"
     ],
     "_id": "5c88fa8cf4afda39709c2955",
-    "name": "The Sea Explorer",
-    "duration": 7,
+    "name": "Kathmandu Durbar Square",
+    "duration": 1,
     "maxGroupSize": 15,
-    "difficulty": "medium",
+    "difficulty": "easy",
     "guides": ["5c8a22c62f8fb814b56fa18b", "5c8a1f4e2f8fb814b56fa185"],
-    "price": 497,
-    "summary": "Exploring the jaw-dropping US east coast by foot and by boat",
+    "price": 50,
+    "summary": "Landmark, ancient royal complex with various palaces, temples & courtyards, plus a museum.",
     "description": "Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\nIrure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
     "imageCover": "tour-2-cover.jpg",
     "locations": [
       {
         "_id": "5c88fa8cf4afda39709c2959",
-        "description": "Lummus Park Beach",
+        "description": "Basantpur Dabali",
         "type": "Point",
-        "coordinates": [-80.128473, 25.781842],
+        "coordinates": [85.307406, 27.703599],
         "day": 1
       },
       {
         "_id": "5c88fa8cf4afda39709c2958",
-        "description": "Islamorada",
+        "description": "Kumari Ghar",
         "type": "Point",
-        "coordinates": [-80.647885, 24.909047],
-        "day": 2
+        "coordinates": [85.306476, 27.703703],
+        "day": 1
       },
       {
         "_id": "5c88fa8cf4afda39709c2957",
-        "description": "Sombrero Beach",
+        "description": "Kasthamandap",
         "type": "Point",
-        "coordinates": [-81.0784, 24.707496],
-        "day": 3
+        "coordinates": [85.305891, 27.703945],
+        "day": 1
       },
       {
         "_id": "5c88fa8cf4afda39709c2956",
-        "description": "West Key",
+        "description": "Taleju Temple",
         "type": "Point",
-        "coordinates": [-81.768719, 24.552242],
-        "day": 5
+        "coordinates": [85.308047, 27.704928],
+        "day": 1
       }
     ]
   },
   {
     "startLocation": {
-      "description": "Banff, CAN",
+      "description": "Pokhara, Nepal",
       "type": "Point",
-      "coordinates": [-115.570154, 51.178456],
-      "address": "224 Banff Ave, Banff, AB, Canada"
+      "coordinates": [83.960218, 28.217977],
+      "address": "Pokhara 33700, Nepal"
     },
     "ratingsAverage": 5,
     "ratingsQuantity": 9,
@@ -71,49 +71,56 @@
       "2021-10-05T09:00:00.000Z"
     ],
     "_id": "5c88fa8cf4afda39709c2951",
-    "name": "The Forest Hiker",
-    "duration": 5,
+    "name": "Pokhara Tour",
+    "duration": 4,
     "maxGroupSize": 25,
-    "difficulty": "easy",
+    "difficulty": "medium",
     "guides": [
       "5c8a21d02f8fb814b56fa189",
       "5c8a201e2f8fb814b56fa186",
       "5c8a1f292f8fb814b56fa184"
     ],
     "price": 397,
-    "summary": "Breathtaking hike through the Canadian Banff National Park",
-    "description": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "summary": "Tour in one of world's most nature rich city Pokhara",
+    "description": "Pokhara is a city on Phewa Lake, in central Nepal. It’s known as a gateway to the Annapurna Circuit, a popular trail in the Himalayas. Tal Barahi Temple, a 2-story pagoda, sits on an island in the lake. On the eastern shore, the Lakeside district has yoga centers and restaurants. In the city’s south, the International Mountain Museum has exhibits on the history of mountaineering and the people of the Himalayas.",
     "imageCover": "tour-1-cover.jpg",
     "locations": [
       {
         "_id": "5c88fa8cf4afda39709c2954",
-        "description": "Banff National Park",
+        "description": "Devi's Falls exploration",
         "type": "Point",
-        "coordinates": [-116.214531, 51.417611],
+        "coordinates": [83.959077, 28.190805],
         "day": 1
       },
       {
         "_id": "5c88fa8cf4afda39709c2953",
-        "description": "Jasper National Park",
+        "description": "Tal Barahi Temple boating",
         "type": "Point",
-        "coordinates": [-118.076152, 52.875223],
-        "day": 3
+        "coordinates": [83.953551, 28.207396],
+        "day": 1
       },
       {
         "_id": "5c88fa8cf4afda39709c2952",
-        "description": "Glacier National Park of Canada",
+        "description": "Hike to World Peace Pagoda",
         "type": "Point",
-        "coordinates": [-117.490309, 51.261937],
-        "day": 5
+        "coordinates": [83.944750, 28.200995],
+        "day": 1
+      },
+      {
+        "_id": "5c88fa8cf4afda39709c2952",
+        "description": "Basking in Pame Beach",
+        "type": "Point",
+        "coordinates": [83.946040, 28.223869],
+        "day": 1
       }
     ]
   },
   {
     "startLocation": {
-      "description": "Aspen, USA",
+      "description": "Chitwan, Nepal",
       "type": "Point",
-      "coordinates": [-106.822318, 39.190872],
-      "address": "419 S Mill St, Aspen, CO 81611, USA"
+      "coordinates": [84.495437, 27.576973],
+      "address": "Sauraha, Ratnanagar 44204, Nepal"
     },
     "ratingsAverage": 4.5,
     "ratingsQuantity": 6,
@@ -124,42 +131,42 @@
       "2023-01-06T10:00:00.000Z"
     ],
     "_id": "5c88fa8cf4afda39709c295a",
-    "name": "The Snow Adventurer",
+    "name": "Chitwan Wildlife Tour",
     "duration": 4,
     "maxGroupSize": 10,
-    "difficulty": "difficult",
+    "difficulty": "easy",
     "guides": [
       "5c8a21d02f8fb814b56fa189",
       "5c8a23412f8fb814b56fa18c",
       "5c8a1f4e2f8fb814b56fa185"
     ],
     "price": 997,
-    "summary": "Exciting adventure in the snow with snowboarding and skiing",
+    "summary": "Established in 1973, this 932-sq.-km. national park features Bengal tigers & other native wildlife.",
     "description": "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum!\nDolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur, exercitation ullamco laboris nisi ut aliquip. Lorem ipsum dolor sit amet, consectetur adipisicing elit!",
     "imageCover": "tour-3-cover.jpg",
     "locations": [
       {
         "_id": "5c88fa8cf4afda39709c295c",
-        "description": "Aspen Highlands",
+        "description": "Chitwan National Park",
         "type": "Point",
-        "coordinates": [-106.855385, 39.182677],
-        "day": 1
+        "coordinates": [84.495437, 27.576973],
+        "day": 2
       },
       {
         "_id": "5c88fa8cf4afda39709c295b",
-        "description": "Beaver Creek",
+        "description": "Elephant Ride",
         "type": "Point",
-        "coordinates": [-106.516623, 39.60499],
-        "day": 2
+        "coordinates": [84.509304, 27.585969],
+        "day": 1
       }
     ]
   },
   {
     "startLocation": {
-      "description": "Las Vegas, USA",
+      "description": "Lo Manthang, Nepal",
       "type": "Point",
-      "coordinates": [-115.172652, 36.110904],
-      "address": "3663 S Las Vegas Blvd, Las Vegas, NV 89109, USA"
+      "coordinates": [83.871293, 29.206158],
+      "address": "Lo Manthang 33100, Nepal"
     },
     "ratingsAverage": 4.7,
     "ratingsQuantity": 7,
@@ -170,56 +177,35 @@
       "2022-08-12T09:00:00.000Z"
     ],
     "_id": "5c88fa8cf4afda39709c2961",
-    "name": "The Park Camper",
+    "name": "Mustang Himalayan Tour",
     "duration": 10,
     "maxGroupSize": 15,
-    "difficulty": "medium",
+    "difficulty": "difficult",
     "guides": [
       "5c8a21f22f8fb814b56fa18a",
       "5c8a23412f8fb814b56fa18c",
       "5c8a201e2f8fb814b56fa186"
     ],
     "price": 1497,
-    "summary": "Breathing in Nature in America's most spectacular National Parks",
-    "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum!",
+    "summary": "Breathing in Nature in Nepal's most Adventerous Himalayan viewsites",
+    "description": "Mustang District is one of the seventy-seven districts of Nepal. It covers an area of 3,573 km² and has a population of 13,452. The headquarters is Jomsom. The district is in Dhawalagiri Zone and part of Gandaki Pradesh in northern Nepal, straddles the Himalayas and extends northward onto the Tibetan Plateau.",
     "imageCover": "tour-5-cover.jpg",
     "locations": [
       {
         "_id": "5c88fa8cf4afda39709c2965",
-        "description": "Zion Canyon National Park",
+        "description": "Lo Manthang Mountain View",
         "type": "Point",
-        "coordinates": [-112.987418, 37.198125],
+        "coordinates": [83.871293, 29.206158],
         "day": 1
-      },
-      {
-        "_id": "5c88fa8cf4afda39709c2964",
-        "description": "Antelope Canyon",
-        "type": "Point",
-        "coordinates": [-111.376161, 36.86438],
-        "day": 4
-      },
-      {
-        "_id": "5c88fa8cf4afda39709c2963",
-        "description": "Grand Canyon National Park",
-        "type": "Point",
-        "coordinates": [-112.115763, 36.058973],
-        "day": 5
-      },
-      {
-        "_id": "5c88fa8cf4afda39709c2962",
-        "description": "Joshua Tree National Park",
-        "type": "Point",
-        "coordinates": [-116.107963, 34.011646],
-        "day": 9
       }
     ]
   },
   {
     "startLocation": {
-      "description": "NYC, USA",
+      "description": "Lumbini, Nepal",
       "type": "Point",
-      "coordinates": [-73.985141, 40.75894],
-      "address": "Manhattan, NY 10036, USA"
+      "coordinates": [83.506984, 27.679309],
+      "address": "Devdaha Municipality 32907, Nepal"
     },
     "ratingsAverage": 4.6,
     "ratingsQuantity": 5,
@@ -230,47 +216,40 @@
       "2021-06-09T09:00:00.000Z"
     ],
     "_id": "5c88fa8cf4afda39709c295d",
-    "name": "The City Wanderer",
-    "duration": 9,
+    "name": "Lumbini Spiritual Tour",
+    "duration": 4,
     "maxGroupSize": 20,
     "difficulty": "easy",
     "guides": ["5c8a22c62f8fb814b56fa18b", "5c8a201e2f8fb814b56fa186"],
-    "price": 1197,
-    "summary": "Living the life of Wanderlust in the US' most beatiful cities",
+    "price": 377,
+    "summary": "Visiting the birthplace of lord Buddha, his peaceful kingdom.",
     "description": "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat lorem ipsum dolor sit amet.\nConsectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur, nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat!",
     "imageCover": "tour-4-cover.jpg",
     "locations": [
       {
         "_id": "5c88fa8cf4afda39709c2960",
-        "description": "New York",
+        "description": "Lumbini Temple",
         "type": "Point",
-        "coordinates": [-73.967696, 40.781821],
+        "coordinates": [83.506984, 27.679309],
         "day": 1
       },
       {
         "_id": "5c88fa8cf4afda39709c295f",
-        "description": "Los Angeles",
+        "description": "Maya Devi Temple",
         "type": "Point",
-        "coordinates": [-118.324396, 34.097984],
-        "day": 3
-      },
-      {
-        "_id": "5c88fa8cf4afda39709c295e",
-        "description": "San Francisco",
-        "type": "Point",
-        "coordinates": [-122.408865, 37.787825],
-        "day": 5
+        "coordinates": [83.275763, 27.469784],
+        "day": 2
       }
     ]
   },
   {
     "startLocation": {
-      "description": "California, USA",
+      "description": "Bhaktapur, Nepal",
       "type": "Point",
       "coordinates": [-118.803461, 34.006072],
-      "address": "29130 Cliffside Dr, Malibu, CA 90265, USA"
+      "address": "Durbar square, Bhaktapur 44800, Nepal"
     },
-    "ratingsAverage": 3.9,
+    "ratingsAverage": 4.8,
     "ratingsQuantity": 7,
     "images": ["tour-6-1.jpg", "tour-6-2.jpg", "tour-6-3.jpg"],
     "startDates": [
@@ -279,63 +258,42 @@
       "2022-03-18T10:00:00.000Z"
     ],
     "_id": "5c88fa8cf4afda39709c2966",
-    "name": "The Sports Lover",
-    "duration": 14,
+    "name": "Bhaktapur Durbar Square Visit",
+    "duration": 2,
     "maxGroupSize": 8,
-    "difficulty": "difficult",
+    "difficulty": "easy",
     "guides": [
       "5c8a21f22f8fb814b56fa18a",
       "5c8a1f292f8fb814b56fa184",
       "5c8a1f4e2f8fb814b56fa185"
     ],
-    "price": 2997,
-    "summary": "Surfing, skating, parajumping, rock climbing and more, all in one tour",
+    "price": 250,
+    "summary": "Time-tested city square with an 1427 CE palace, multiple temples, statues & intricate gates.",
     "description": "Nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\nVoluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur!",
     "imageCover": "tour-6-cover.jpg",
     "locations": [
       {
         "_id": "5c88fa8cf4afda39709c296b",
-        "description": "Point Dume Beach",
+        "description": "Bhaktapur Durbar Square",
         "type": "Point",
-        "coordinates": [-118.809361, 34.003098],
+        "coordinates": [85.428113, 27.672169],
         "day": 1
       },
       {
         "_id": "5c88fa8cf4afda39709c296a",
-        "description": "Venice Skate Park",
+        "description": "Nyatapole Temple",
         "type": "Point",
-        "coordinates": [-118.47549, 33.987367],
+        "coordinates": [85.429327, 27.671355],
         "day": 4
-      },
-      {
-        "_id": "5c88fa8cf4afda39709c2969",
-        "description": "San Diego Skydive",
-        "type": "Point",
-        "coordinates": [-116.830104, 33.022843],
-        "day": 6
-      },
-      {
-        "_id": "5c88fa8cf4afda39709c2968",
-        "description": "Kern River Rafting",
-        "type": "Point",
-        "coordinates": [-118.4547, 35.710359],
-        "day": 7
-      },
-      {
-        "_id": "5c88fa8cf4afda39709c2967",
-        "description": "Yosemite National Park",
-        "type": "Point",
-        "coordinates": [-119.600492, 37.742371],
-        "day": 10
       }
     ]
   },
   {
     "startLocation": {
-      "description": "Utah, USA",
+      "description": "Swoyambhu, Nepal",
       "type": "Point",
-      "coordinates": [-109.55099, 37.283469],
-      "address": "Bluff, UT 84512, USA"
+      "coordinates": [85.293734 , 27.715369],
+      "address": "BHAGANPAU 44600, Kathmandu, Nepal"
     },
     "ratingsAverage": 4.8,
     "ratingsQuantity": 6,
@@ -346,45 +304,31 @@
       "2022-01-30T10:00:00.000Z"
     ],
     "_id": "5c88fa8cf4afda39709c2970",
-    "name": "The Star Gazer",
-    "duration": 9,
+    "name": "The Monkey Temple",
+    "duration": 1,
     "maxGroupSize": 8,
-    "difficulty": "medium",
+    "difficulty": "easy",
     "guides": ["5c8a21d02f8fb814b56fa189", "5c8a1f292f8fb814b56fa184"],
-    "price": 2997,
-    "summary": "The most remote and stunningly beautiful places for seeing the night sky",
+    "price": 99,
+    "summary": "A very old religious site, this Buddhist complex has an iconic stupa, temples & many shrines.",
     "description": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\nLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     "imageCover": "tour-8-cover.jpg",
     "locations": [
       {
         "_id": "5c88fa8cf4afda39709c2973",
-        "description": "Natural Bridges National Monument",
+        "description": "Swoyambhu Stupa",
         "type": "Point",
-        "coordinates": [-109.99953, 37.629017],
+        "coordinates": [85.293734 , 27.715369],
         "day": 1
-      },
-      {
-        "_id": "5c88fa8cf4afda39709c2972",
-        "description": "Horseshoe Bend",
-        "type": "Point",
-        "coordinates": [-111.50954, 36.883269],
-        "day": 3
-      },
-      {
-        "_id": "5c88fa8cf4afda39709c2971",
-        "description": "Death Valley National Park",
-        "type": "Point",
-        "coordinates": [-117.07399, 36.501435],
-        "day": 6
       }
     ]
   },
   {
     "startLocation": {
-      "description": "Yellowknife, CAN",
+      "description": "Rara, Nepal",
       "type": "Point",
-      "coordinates": [-114.406097, 62.439943],
-      "address": "Yellowknife, NT X1A 2L2, Canada"
+      "coordinates": [82.079190, 29.524926],
+      "address": "Rara Lake, Rara 21100, Nepal"
     },
     "ratingsAverage": 4.7,
     "ratingsQuantity": 7,
@@ -395,35 +339,35 @@
       "2022-12-12T10:00:00.000Z"
     ],
     "_id": "5c88fa8cf4afda39709c2974",
-    "name": "The Northern Lights",
-    "duration": 3,
+    "name": "Magnificient Rara Lake",
+    "duration": 9,
     "maxGroupSize": 12,
-    "difficulty": "easy",
+    "difficulty": "difficult",
     "guides": [
       "5c8a21f22f8fb814b56fa18a",
       "5c8a201e2f8fb814b56fa186",
       "5c8a23412f8fb814b56fa18c"
     ],
-    "price": 1497,
-    "summary": "Enjoy the Northern Lights in one of the best places in the world",
+    "price": 797,
+    "summary": "2,990m-elev. lake, Nepal's largest, at the heart of Rara National Park, with boating & wooded hikes.",
     "description": "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum!\nDolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur, exercitation ullamco laboris nisi ut aliquip. Lorem ipsum dolor sit amet, consectetur adipisicing elit!",
     "imageCover": "tour-9-cover.jpg",
     "locations": [
       {
         "_id": "5c88fa8cf4afda39709c2975",
-        "description": "Yellowknife",
+        "description": "Rara Lake",
         "type": "Point",
-        "coordinates": [-114.406097, 62.439943],
+        "coordinates": [82.079190, 29.524926],
         "day": 1
       }
     ]
   },
   {
     "startLocation": {
-      "description": "California, USA",
+      "description": "Mount Everest, Nepal",
       "type": "Point",
       "coordinates": [-122.29286, 38.294065],
-      "address": "560 Jefferson St, Napa, CA 94559, USA"
+      "address": "7MV8XWQF+6X, Lhotse, Nepal"
     },
     "ratingsAverage": 4.4,
     "ratingsQuantity": 7,
@@ -434,36 +378,22 @@
       "2021-09-01T09:00:00.000Z"
     ],
     "_id": "5c88fa8cf4afda39709c296c",
-    "name": "The Wine Taster",
-    "duration": 5,
+    "name": "The Everest Conquerer",
+    "duration": 12,
     "maxGroupSize": 8,
-    "difficulty": "easy",
+    "difficulty": "difficult",
     "guides": ["5c8a22c62f8fb814b56fa18b", "5c8a23412f8fb814b56fa18c"],
-    "price": 1997,
-    "summary": "Exquisite wines, scenic views, exclusive barrel tastings,  and much more",
+    "price": 2997,
+    "summary": "This iconic 29,029-foot mountain, the tallest peak on earth, draws many expert climbers.",
     "description": "Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\nIrure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
     "imageCover": "tour-7-cover.jpg",
     "locations": [
       {
         "_id": "5c88fa8cf4afda39709c296f",
-        "description": "Beringer Vineyards",
+        "description": "Mount Everest Base Camp",
         "type": "Point",
-        "coordinates": [-122.479887, 38.510312],
+        "coordinates": [86.924533, 27.987811],
         "day": 1
-      },
-      {
-        "_id": "5c88fa8cf4afda39709c296e",
-        "description": "Clos Pegase Winery & Tasting Room",
-        "type": "Point",
-        "coordinates": [-122.582948, 38.585707],
-        "day": 3
-      },
-      {
-        "_id": "5c88fa8cf4afda39709c296d",
-        "description": "Raymond Vineyard and Cellar",
-        "type": "Point",
-        "coordinates": [-122.434697, 38.482181],
-        "day": 5
       }
     ]
   }
