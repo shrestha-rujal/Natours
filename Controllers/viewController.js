@@ -66,3 +66,15 @@ exports.updateUser = captureAsyncError(async (req, res) => {
     user: updatedUser,
   });
 });
+
+exports.addReview = captureAsyncError(async (req, res, next) => {
+  const tour = await Tour.findOne({ slug: req.params.slug });
+
+  if (!tour) {
+    return next(new AppError("Can't add review to unknown tours!", 400));
+  }
+
+  res.locals.tour = tour;
+
+  return res.status(200).render('add-review', { title: 'Add a review' });
+});

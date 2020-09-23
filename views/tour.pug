@@ -67,6 +67,9 @@ block content
     #map(data-locations=`${JSON.stringify(tour.locations)}`)
 
   section.section-reviews
+    if user
+      .add-review
+        a(href=`/add-review/${tour.slug}`).btn.btn--white.add-review__btn Leave a review
     .reviews
       each review in tour.reviews
         +reviewCard(review)
