@@ -59,7 +59,6 @@ block content
     each image,index in tour.images
       .picture-box
         img.picture-box__img(
-          class=`picture-box__img--${index+1}`
           src=`/img/tours/${image}`, alt=`${tour.name} ${index + 1}`
         )
 
