@@ -26,7 +26,7 @@ exports.getTour = captureAsyncError(async (req, res, next) => {
   });
 });
 
-exports.getBookedTours = captureAsyncError(async (req, res, next) => {
+exports.getBookedTours = captureAsyncError(async (req, res) => {
   const bookings = await Booking.find({ user: req.user.id });
   const tourIds = bookings.map((el) => el.tour.id);
   const tours = await Tour.find({ _id: { $in: tourIds } });
@@ -41,11 +41,15 @@ exports.getLoginForm = (req, res) => {
   res.status(200).render('login', { title: 'Log into your account' });
 };
 
-exports.getAccount = (req, res) => {
-  return res.status(200).render('account', { title: 'View your account' });
+exports.getSignupForm = (req, res) => {
+  res.status(200).render('signup', { title: 'Create new account' });
 };
 
-exports.updateUser = captureAsyncError(async (req, res, next) => {
+exports.getAccount = (req, res) => {
+  res.status(200).render('account', { title: 'View your account' });
+};
+
+exports.updateUser = captureAsyncError(async (req, res) => {
   const updatedUser = await User.findByIdAndUpdate(
     req.user.id,
     {
