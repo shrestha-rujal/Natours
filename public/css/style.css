@@ -238,6 +238,14 @@ body {
   background-color: #55c57a;
 }
 
+.btn--red {
+  background-color: #e65d5d;
+  color: #fff;
+}
+.btn--red::after {
+  background-color: #d44747;
+}
+
 .btn--small {
   padding: 1.25rem 3rem !important;
   font-size: 1.4rem !important;
@@ -674,7 +682,11 @@ body {
 .reviews__star--inactive {
   fill: #bbb;
 }
-
+.add-review {
+  width: 100%;
+  text-align: end;
+  padding-right: 8rem;
+}
 .section-cta {
   margin-top: calc(0px - var(--section-rotate));
   padding: 3rem;
@@ -1273,6 +1285,25 @@ body {
 
 .form__group:not(:last-child) {
   margin-bottom: 2.5rem;
+}
+
+.form__select {
+  display: block;
+  font-family: inherit;
+  font-size: 1.5rem;
+  color: inherit;
+  padding: 1.25rem 1.75rem;
+  border: none;
+  width: 100%;
+  background-color: #fff;
+  background-color: #f2f2f2;
+  border-top: 3px solid transparent;
+  border-bottom: 3px solid transparent;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  border-radius: 4px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .form__label {

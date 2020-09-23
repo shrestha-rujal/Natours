@@ -1,9 +1,10 @@
 import '@babel/polyfill';
 import updateAccountCredentials from './accountSettings';
-import { login, logout } from './login';
+import { login, logout, deleteAccount } from './login';
 import { signup } from './signup';
 import { displayMap } from './mapbox';
 import bookTour from './stripe';
+import createReview from './review';
 
 // DOM ELEMENTS
 const mapBoxElement = document.getElementById('map');
@@ -13,6 +14,8 @@ const logoutBtn = document.getElementById('logout-btn');
 const profileFormElement = document.querySelector('#profile-form');
 const passwordFormElement = document.querySelector('#password-form');
 const bookTourBtn = document.getElementById('book-tour-btn');
+const reviewFormElement = document.getElementById('review-form');
+const deleteAccountButton = document.getElementById('delete-account');
 
 // DELEGATION
 
@@ -94,5 +97,28 @@ if (bookTourBtn) {
     e.target.textContent = 'Processing...';
 
     bookTour(tourId);
+  });
+}
+
+if (reviewFormElement) {
+  reviewFormElement.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const tourId = document.getElementById('tour-id').value;
+    const tourSlug = document.getElementById('tour-slug').value;
+    const review = document.getElementById('review').value;
+    const rating = document.getElementById('rating').value;
+
+    createReview({
+      tour: tourId,
+      tourSlug,
+      review,
+      rating,
+    });
+  });
+}
+
+if (deleteAccountButton) {
+  deleteAccountButton.addEventListener('click', (e) => {
+    deleteAccount();
   });
 }

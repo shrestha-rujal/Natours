@@ -33,3 +33,21 @@ export const logout = async () => {
     showAlert('error', 'Error Logging out! Try again.');
   };
 };
+
+export const deleteAccount = async () => {
+  try {
+    const res = await axios({
+      method: 'DELETE',
+      url: 'api/v1/users/deleteUser',
+    });
+
+    if (res.data.status === 'success') {
+      showAlert('success', 'Account Succesfully deleted!');
+      window.setTimeout(() => {
+        location.assign('/');
+      }, 1000);
+    }
+  } catch (err) {
+    showAlert('error', 'Error deleting account!');
+  }
+};

@@ -16,5 +16,6 @@ router.get('/tour/:slug', authController.isUserOnline, viewController.getTour);
 router.get('/login', authController.isUserOnline, viewController.getLoginForm);
 router.get('/signup', authController.isUserOnline, viewController.getSignupForm);
 router.get('/account', authController.checkLoggedIn, viewController.getAccount);
+router.get('/add-review/:slug', authController.checkLoggedIn, viewController.addReview);
 
 module.exports = router;
