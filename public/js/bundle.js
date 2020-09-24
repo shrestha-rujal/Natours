@@ -8474,8 +8474,7 @@ var login = /*#__PURE__*/function () {
           case 0:
             email = _ref.email, password = _ref.password;
             _context.prev = 1;
-            console.log('calling login axios');
-            _context.next = 5;
+            _context.next = 4;
             return (0, _axios.default)({
               method: 'POST',
               url: '/api/v1/users/login',
@@ -8485,9 +8484,8 @@ var login = /*#__PURE__*/function () {
               }
             });
 
-          case 5:
+          case 4:
             res = _context.sent;
-            console.log('AXIOS CALLED!');
 
             if (res.data.status === 'success') {
               (0, _alert.showAlert)('success', 'Logged in successfully!');
@@ -8496,23 +8494,23 @@ var login = /*#__PURE__*/function () {
               }, 1000);
             }
 
-            _context.next = 13;
+            _context.next = 11;
             break;
 
-          case 10:
-            _context.prev = 10;
+          case 8:
+            _context.prev = 8;
             _context.t0 = _context["catch"](1);
             (0, _alert.showAlert)('error', _context.t0.response.data.message);
 
-          case 13:
+          case 11:
             ;
 
-          case 14:
+          case 12:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[1, 10]]);
+    }, _callee, null, [[1, 8]]);
   }));
 
   return function login(_x) {
@@ -8735,7 +8733,6 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 var stripe = Stripe('pk_test_e0nuQ60Y39XDAWiIC2khmrnp005MRcJwCZ');
-/* eslint-disable-line */
 
 var bookTour = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(tourId) {
@@ -8745,32 +8742,34 @@ var bookTour = /*#__PURE__*/function () {
         switch (_context.prev = _context.next) {
           case 0:
             _context.prev = 0;
-            _context.next = 3;
+            console.log('calling');
+            _context.next = 4;
             return (0, _axios.default)("/api/v1/bookings/checkout-session/".concat(tourId));
 
-          case 3:
+          case 4:
             sessionResponse = _context.sent;
-            _context.next = 6;
+            console.log('hello');
+            _context.next = 8;
             return stripe.redirectToCheckout({
               sessionId: sessionResponse.data.session.id
             });
 
-          case 6:
-            _context.next = 12;
+          case 8:
+            _context.next = 14;
             break;
 
-          case 8:
-            _context.prev = 8;
+          case 10:
+            _context.prev = 10;
             _context.t0 = _context["catch"](0);
             console.log(_context.t0);
             (0, _alert.showAlert)('error', _context.t0.response.data.message);
 
-          case 12:
+          case 14:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[0, 8]]);
+    }, _callee, null, [[0, 10]]);
   }));
 
   return function bookTour(_x) {
@@ -9292,7 +9291,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34067" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40121" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
