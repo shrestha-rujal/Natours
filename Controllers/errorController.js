@@ -13,7 +13,8 @@ const handleCastErrorDB = (error) => new AppError(
 );
 
 const handleDuplicateFieldErrorDB = (error) => new AppError(
-  `Duplicate ${Object.keys(error.keyValue)[0]}: ${error.keyValue.name}`,
+  // `Duplicate ${Object.keys(error.keyValue)[0]}: ${error.keyValue.name}`,
+  error.message,
   400,
 );
 
@@ -76,7 +77,7 @@ module.exports = (err, req, res, next) => {
   err.status = err.status || 'error';
 
   if (process.env.NODE_ENV === 'development') sendErrorDev(err, req, res);
-  else if (process.env.NODE_ENV === 'production') {
+  else if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'aws') {
     let error = { ...err };
     error.message = err.message;
 
